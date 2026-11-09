@@ -1,0 +1,32 @@
+# FIND TOTAL ORDERS BY MARKET_DATE, PRODUCT_ID AND VENDOR_ID
+
+select 
+market_date, product_id, vendor_id, count(*)
+
+from `freshcart.orders`
+group by   market_date, product_id, vendor_id
+
+--rollup
+select 
+product_id, vendor_id, market_date, count(*) order_count
+
+from `freshcart.orders`
+group by  rollup(product_id, vendor_id, market_date);
+
+
+--cube
+
+select 
+product_id, vendor_id, market_date, count(*) order_count
+
+from `freshcart.orders`
+group by  cube(product_id, vendor_id, market_date);
+
+
+--grouping sets
+
+select 
+product_id, vendor_id, market_date, count(*) order_count
+
+from `freshcart.orders`
+group by  grouping sets((product_id), (product_id,  vendor_id), (product_id ,market_date));
